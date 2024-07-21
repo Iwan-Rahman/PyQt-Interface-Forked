@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>528</width>
-    <height>294</height>
+    <width>558</width>
+    <height>299</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -272,7 +272,7 @@
           <item>
            <widget class="QRadioButton" name="StopBitBtn1P2">
             <property name="styleSheet">
-             <string notr="true">color: rgb(255, 255, 255);</string>
+             <string notr="true"/>
             </property>
             <property name="text">
              <string>1</string>
@@ -282,7 +282,7 @@
           <item>
            <widget class="QRadioButton" name="StopBitBtn2P12">
             <property name="styleSheet">
-             <string notr="true">color: rgb(255, 255, 255);</string>
+             <string notr="true"/>
             </property>
             <property name="text">
              <string>2</string>
@@ -297,14 +297,14 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
-        <widget class="QPushButton" name="Port1ConnectBtnP2">
+        <widget class="QPushButton" name="ConnectBtnP2">
          <property name="text">
           <string>► Connect</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="Port1DisconnectBtnP2">
+        <widget class="QPushButton" name="DisconnectBtnP2">
          <property name="text">
           <string>■ Disconnect</string>
          </property>
@@ -552,7 +552,7 @@
           <item>
            <widget class="QRadioButton" name="StopBitBtn1P3">
             <property name="styleSheet">
-             <string notr="true">color: rgb(255, 255, 255);</string>
+             <string notr="true"/>
             </property>
             <property name="text">
              <string>1</string>
@@ -562,7 +562,7 @@
           <item>
            <widget class="QRadioButton" name="StopBitBtn2P3">
             <property name="styleSheet">
-             <string notr="true">color: rgb(255, 255, 255);</string>
+             <string notr="true"/>
             </property>
             <property name="text">
              <string>2</string>
@@ -577,14 +577,14 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
-        <widget class="QPushButton" name="Port1ConnectBtnP3">
+        <widget class="QPushButton" name="ConnectBtnP3">
          <property name="text">
           <string>► Connect</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="Port1DisconnectBtn_">
+        <widget class="QPushButton" name="DisconnectBtnP3">
          <property name="text">
           <string>■ Disconnect</string>
          </property>
@@ -861,7 +861,7 @@
           <item>
            <widget class="QRadioButton" name="StopBitBtn1P1">
             <property name="styleSheet">
-             <string notr="true">color: rgb(255, 255, 255);</string>
+             <string notr="true"/>
             </property>
             <property name="text">
              <string>1</string>
@@ -871,7 +871,7 @@
           <item>
            <widget class="QRadioButton" name="StopBitBtn2P1">
             <property name="styleSheet">
-             <string notr="true">color: rgb(255, 255, 255);</string>
+             <string notr="true"/>
             </property>
             <property name="text">
              <string>2</string>
