@@ -8,20 +8,20 @@ def get_ports():
     return ports
 
 
-def connectCOM(com, baud, data, parity, stop, timeout):
+def connectCOM(self, portNo, com, baud, data, parity, stop, timeout):
     serialByteSize = getSerialByteSize(data)
     serialParity = getSerialParity(parity)
     serialStopBits = getSerialStopBit(stop)
     print(str(serialByteSize))
     print(str(serialParity))
     print(str(serialStopBits))
-    ser = serial.Serial(com, baudrate = baud,bytesize=serialByteSize,parity=serialParity,stopbits=serialStopBits, timeout=timeout)
-    while 1:
-        arduinoData = ser.readline().decode('ascii')
-        print(arduinoData)
+    print(portNo)
+    print(self.connectedPorts[portNo])
+    self.connectedPorts[portNo] = serial.Serial(com, baudrate = baud,bytesize=serialByteSize,parity=serialParity,stopbits=serialStopBits, timeout=timeout)
 
+def DisconnectCOM(port):
+    port.close()
 
-    
 def getSerialByteSize(byteSizeInput):
     byteSize = None
     match byteSizeInput:

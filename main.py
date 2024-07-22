@@ -20,6 +20,7 @@ class ComWindow(qw.QDialog,Ui_ComManager):
     self.DisconnectBtnP2.clicked.connect(self.disconnectPort2)
     self.ConnectBtnP3.clicked.connect(self.connectPort3)
     self.DisconnectBtnP3.clicked.connect(self.disconnectPort3)
+    self.connectedPorts = [None, None, None]
 
   def refresh(self):
     self.ports = get_ports()
@@ -51,7 +52,7 @@ class ComWindow(qw.QDialog,Ui_ComManager):
         break
     
     try:
-      connectCOM(str(self.PortInputP1.currentText()), int(self.BaudInputP1.currentText()),int(self.ByteSizeInputP1.value()),
+      connectCOM(self,0,str(self.PortInputP1.currentText()), int(self.BaudInputP1.currentText()),int(self.ByteSizeInputP1.value()),
                str(self.ParityInputP1.currentText()),int(self.StopBitInput.text()),int(self.TimeoutInputP1.value()))
       self.PortInputP1.setEnabled(False)
       self.BaudInputP1.setEnabled(False)
@@ -65,6 +66,11 @@ class ComWindow(qw.QDialog,Ui_ComManager):
 
     
   def disconnectPort1(self):
+    if self.connectedPorts[0] != None:
+      try:
+        DisconnectCOM(self.connectedPorts[0])
+      except:
+        print('Error')
     if(len(self.ports) != 0):
           self.PortInputP1.setEnabled(True)
     self.BaudInputP1.setEnabled(True)
