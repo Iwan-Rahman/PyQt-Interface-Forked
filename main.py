@@ -108,6 +108,14 @@ class MainWindow(qw.QMainWindow, Ui_MainWindow):
      self.comWindow = ComWindow()
     self.comWindow.show()
 
+  def closeEvent(self,event):
+    reply = qw.QMessageBox.question(self, 'Quit', 'Are you sure you want to quit the application?',
+        qw.QMessageBox.Yes | qw.QMessageBox.No, qw.QMessageBox.No)
+    if reply == qw.QMessageBox.Yes:
+      qw.QApplication.quit() # Proceed with the close event
+    else:
+      event.ignore()  # Ignore the close event, keep the window open
+
   
 app = qw.QApplication([])
 window = MainWindow()
