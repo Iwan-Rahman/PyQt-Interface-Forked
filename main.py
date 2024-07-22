@@ -44,13 +44,26 @@ class ComWindow(qw.QDialog,Ui_ComManager):
         self.PortInputP3.addItem(x)   
       
   def connectPort1(self):
-    self.PortInputP1.setEnabled(False)
-    self.BaudInputP1.setEnabled(False)
-    self.ByteSizeInputP1.setEnabled(False)
-    self.ParityInputP1.setEnabled(False)
-    self.StopBitInputP1.setEnabled(False)
-    self.TimeoutInputP1.setEnabled(False)
-  
+    self.StopBitInput = None
+    for radioBtn in self.StopBitInputP1.findChildren(qw.QRadioButton):
+      if radioBtn.isChecked():
+        self.StopBitInput = radioBtn
+        break
+    
+    try:
+      connectCOM(str(self.PortInputP1.currentText()), int(self.BaudInputP1.currentText()),int(self.ByteSizeInputP1.value()),
+               str(self.ParityInputP1.currentText()),int(self.StopBitInput.text()),int(self.TimeoutInputP1.value()))
+      self.PortInputP1.setEnabled(False)
+      self.BaudInputP1.setEnabled(False)
+      self.ByteSizeInputP1.setEnabled(False)
+      self.ParityInputP1.setEnabled(False)
+      self.StopBitInputP1.setEnabled(False)
+      self.TimeoutInputP1.setEnabled(False)
+    except:
+      reply = qw.QMessageBox.critical(self, 'Connection Error', 'There was an error connecting to the port',
+        qw.QMessageBox.Ok)
+
+    
   def disconnectPort1(self):
     if(len(self.ports) != 0):
           self.PortInputP1.setEnabled(True)
@@ -93,6 +106,7 @@ class ComWindow(qw.QDialog,Ui_ComManager):
     self.ParityInputP3.setEnabled(True)
     self.StopBitInputP3.setEnabled(True)
     self.TimeoutInputP3.setEnabled(True)
+
 
 
 class MainWindow(qw.QMainWindow, Ui_MainWindow):

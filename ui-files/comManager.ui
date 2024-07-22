@@ -246,7 +246,14 @@
         </widget>
        </item>
        <item row="5" column="1">
-        <widget class="QSpinBox" name="TimeoutInputP2"/>
+        <widget class="QSpinBox" name="TimeoutInputP2">
+         <property name="minimum">
+          <number>100</number>
+         </property>
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+        </widget>
        </item>
        <item row="4" column="1">
         <widget class="QGroupBox" name="StopBitInputP2">
@@ -276,6 +283,9 @@
             </property>
             <property name="text">
              <string>1</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -526,7 +536,14 @@
         </widget>
        </item>
        <item row="5" column="1">
-        <widget class="QSpinBox" name="TimeoutInputP3"/>
+        <widget class="QSpinBox" name="TimeoutInputP3">
+         <property name="minimum">
+          <number>100</number>
+         </property>
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+        </widget>
        </item>
        <item row="4" column="1">
         <widget class="QGroupBox" name="StopBitInputP3">
@@ -556,6 +573,9 @@
             </property>
             <property name="text">
              <string>1</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -826,7 +846,14 @@
         </widget>
        </item>
        <item row="5" column="1">
-        <widget class="QSpinBox" name="TimeoutInputP1"/>
+        <widget class="QSpinBox" name="TimeoutInputP1">
+         <property name="minimum">
+          <number>100</number>
+         </property>
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+        </widget>
        </item>
        <item row="4" column="1">
         <widget class="QGroupBox" name="StopBitInputP1">
@@ -865,6 +892,9 @@
             </property>
             <property name="text">
              <string>1</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
