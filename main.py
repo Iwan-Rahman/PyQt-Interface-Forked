@@ -3,13 +3,12 @@ from PyQt5 import QtWidgets as qw, uic
 from MainWindow import Ui_MainWindow
 from ComManager import Ui_ComManager
 from graph import Ui_Graph
-from serialConnection import *
+from serialConnection import serial_connection
 
 class ComWindow(qw.QDialog,Ui_ComManager):
   def __init__(self):
     super().__init__()
     self.setupUi(self)
-    self.refresh()
     self.refreshBtn = qw.QPushButton("Refresh")
     self.refreshBtn.setObjectName("Refresh")
     self.refreshBtn.clicked.connect(self.refresh)
@@ -20,57 +19,85 @@ class ComWindow(qw.QDialog,Ui_ComManager):
     self.DisconnectBtnP2.clicked.connect(self.disconnectPort2)
     self.ConnectBtnP3.clicked.connect(self.connectPort3)
     self.DisconnectBtnP3.clicked.connect(self.disconnectPort3)
-    self.connectedPorts = [None, None, None]
+    self.initValues()
+    self.refresh()
 
   def refresh(self):
-    self.ports = get_ports()
+    self.ports = serial_connection.get_ports()
     print(self.ports)
-    self.PortInputP1.clear()
-    self.PortInputP2.clear()
-    self.PortInputP3.clear()
-    if(len(self.ports) == 0):
-      self.PortInputP1.insertItem(0,'No Ports Found')
-      self.PortInputP2.insertItem(0,'No Ports Found')
-      self.PortInputP3.insertItem(0,'No Ports Found')
-      self.PortInputP1.setEnabled(False)
-      self.PortInputP2.setEnabled(False)
-      self.PortInputP3.setEnabled(False)
-    else:
-      self.PortInputP1.setEnabled(True)
-      self.PortInputP2.setEnabled(True)
-      self.PortInputP3.setEnabled(True)
-      for x in self.ports:
-        self.PortInputP1.addItem(x)
-        self.PortInputP2.addItem(x)
-        self.PortInputP3.addItem(x)   
-      
+
+    # Reset Port 1 Input
+    if serial_connection.connectedPorts[0] == None:
+      self.PortInputP1.clear()
+      if(len(self.ports) == 0):
+        self.PortInputP1.insertItem(0,'No Ports Found')
+        self.PortInputP1.setEnabled(False)
+      else:
+        self.PortInputP1.setEnabled(True)
+        for x in self.ports:
+          self.PortInputP1.addItem(x)
+
+    # Reset Port 2 Input  
+    if serial_connection.connectedPorts[1] == None:
+      self.PortInputP2.clear()
+      if(len(self.ports) == 0):
+       self.PortInputP2.insertItem(0,'No Ports Found')
+       self.PortInputP2.setEnabled(False)
+      else:
+        self.PortInputP2.setEnabled(True)
+        for x in self.ports:
+          self.PortInputP2.addItem(x)
+    
+    # Reset Port 3 Input 
+    if serial_connection.connectedPorts[2] == None:
+      self.PortInputP3.clear()
+      if(len(self.ports) == 0):
+        self.PortInputP3.insertItem(0,'No Ports Found')
+        self.PortInputP3.setEnabled(False)
+      else:
+        self.PortInputP3.setEnabled(True)
+        for x in self.ports:
+          self.PortInputP3.addItem(x)   
+  
+  def initValues(self):
+    self.DisconnectBtnP1.setEnabled(False)
+    self.DisconnectBtnP2.setEnabled(False)
+    self.DisconnectBtnP3.setEnabled(False)
+
   def connectPort1(self):
     self.StopBitInput = None
     for radioBtn in self.StopBitInputP1.findChildren(qw.QRadioButton):
       if radioBtn.isChecked():
         self.StopBitInput = radioBtn
         break
-    
     try:
-      connectCOM(self,0,str(self.PortInputP1.currentText()), int(self.BaudInputP1.currentText()),int(self.ByteSizeInputP1.value()),
-               str(self.ParityInputP1.currentText()),int(self.StopBitInput.text()),int(self.TimeoutInputP1.value()))
+      serial_connection.connectCOM(
+        0,
+        str(self.PortInputP1.currentText()),
+        int(self.BaudInputP1.currentText()),
+        int(self.ByteSizeInputP1.value()),
+        str(self.ParityInputP1.currentText()),
+        int(self.StopBitInput.text()),
+        int(self.TimeoutInputP1.value())
+        )
       self.PortInputP1.setEnabled(False)
       self.BaudInputP1.setEnabled(False)
       self.ByteSizeInputP1.setEnabled(False)
       self.ParityInputP1.setEnabled(False)
       self.StopBitInputP1.setEnabled(False)
       self.TimeoutInputP1.setEnabled(False)
-    except:
-      reply = qw.QMessageBox.critical(self, 'Connection Error', 'There was an error connecting to the port',
-        qw.QMessageBox.Ok)
+      self.ConnectBtnP1.setEnabled(False)
+      self.DisconnectBtnP1.setEnabled(True)
+    except Exception as e:
+            reply = qw.QMessageBox.critical(
+                self, 
+                'Connection Error', 
+                f'There was an error connecting to the port: {e}',
+                qw.QMessageBox.Ok
+            )
 
-    
   def disconnectPort1(self):
-    if self.connectedPorts[0] != None:
-      try:
-        DisconnectCOM(self.connectedPorts[0])
-      except:
-        print('Error')
+    serial_connection.disconnectCOM(0)
     if(len(self.ports) != 0):
           self.PortInputP1.setEnabled(True)
     self.BaudInputP1.setEnabled(True)
@@ -78,6 +105,8 @@ class ComWindow(qw.QDialog,Ui_ComManager):
     self.ParityInputP1.setEnabled(True)
     self.StopBitInputP1.setEnabled(True)
     self.TimeoutInputP1.setEnabled(True)
+    self.ConnectBtnP1.setEnabled(True)
+    self.DisconnectBtnP1.setEnabled(False)
 
   def connectPort2(self):
     self.PortInputP2.setEnabled(False)
@@ -86,6 +115,8 @@ class ComWindow(qw.QDialog,Ui_ComManager):
     self.ParityInputP2.setEnabled(False)
     self.StopBitInputP2.setEnabled(False)
     self.TimeoutInputP2.setEnabled(False)
+    self.ConnectBtnP2.setEnabled(False)
+    self.DisconnectBtnP2.setEnabled(True)
   
   def disconnectPort2(self):
     if(len(self.ports) != 0):
@@ -95,6 +126,8 @@ class ComWindow(qw.QDialog,Ui_ComManager):
     self.ParityInputP2.setEnabled(True)
     self.StopBitInputP2.setEnabled(True)
     self.TimeoutInputP2.setEnabled(True)  
+    self.ConnectBtnP2.setEnabled(True)
+    self.DisconnectBtnP2.setEnabled(False)
 
   def connectPort3(self):
     if(len(self.ports) != 0):
@@ -104,6 +137,8 @@ class ComWindow(qw.QDialog,Ui_ComManager):
     self.ParityInputP3.setEnabled(False)
     self.StopBitInputP3.setEnabled(False)
     self.TimeoutInputP3.setEnabled(False)
+    self.ConnectBtnP3.setEnabled(False)
+    self.DisconnectBtnP3.setEnabled(True)
   
   def disconnectPort3(self):  
     self.PortInputP3.setEnabled(True)
@@ -112,7 +147,8 @@ class ComWindow(qw.QDialog,Ui_ComManager):
     self.ParityInputP3.setEnabled(True)
     self.StopBitInputP3.setEnabled(True)
     self.TimeoutInputP3.setEnabled(True)
-
+    self.ConnectBtnP3.setEnabled(True)
+    self.DisconnectBtnP3.setEnabled(False)
 
 
 class MainWindow(qw.QMainWindow, Ui_MainWindow):
