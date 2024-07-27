@@ -4,6 +4,12 @@ from MainWindow import Ui_MainWindow
 from ComManager import Ui_ComManager
 from graph import Ui_Graph
 from serialConnection import serial_connection
+from ConnectionManager import Ui_ConnectionManager
+
+class ConnectionWidget(qw.QWidget,Ui_ConnectionManager):
+  def __init__(self):
+    super().__init__()
+    self.setupUi(self)
 
 class ComWindow(qw.QDialog,Ui_ComManager):
   def __init__(self):
@@ -150,14 +156,15 @@ class ComWindow(qw.QDialog,Ui_ComManager):
     self.ConnectBtnP3.setEnabled(True)
     self.DisconnectBtnP3.setEnabled(False)
 
-
 class MainWindow(qw.QMainWindow, Ui_MainWindow):
   def __init__(self, *args, obj=None, **kwargs):
     super(MainWindow,self).__init__(*args,**kwargs)
     self.setupUi(self)
-
     self.actionConnect.triggered.connect(self.openCOM)
     self.comWindow = None
+    self.connectionManager = ConnectionWidget()
+    self.horizontalLayout.replaceWidget(self.connectionWidget, self.connectionManager)
+    self.connectionWidget.setParent(None)
 
   def openCOM(self):
     if self.comWindow is None:
