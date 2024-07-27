@@ -21,17 +21,66 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout" stretch="3,1">
       <item>
-       <widget class="QWidget" name="widget" native="true">
+       <widget class="QWidget" name="connectionWidget" native="true">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(180, 180, 180);</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QWidget" name="widget_2" native="true">
+       <widget class="QWidget" name="warningWidget" native="true">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(180, 180, 180);</string>
         </property>
+        <layout class="QVBoxLayout" name="verticalLayout_4" stretch="1,3">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>4</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>4</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="label_4">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Warnings&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#55ff00;&quot;&gt;1: Battery Value Below 50%&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_2">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;2. ESC Exceeding Current Intake&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_3">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffaa00;&quot;&gt;3. Battery Overheating&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
        </widget>
       </item>
      </layout>
@@ -84,13 +133,198 @@
      <string>File</string>
     </property>
     <addaction name="actionConnect"/>
+    <addaction name="actionNew_Project"/>
+    <addaction name="actionOpen_Project"/>
+    <addaction name="actionSave_Project"/>
+    <addaction name="actionSave_Project_As"/>
+    <addaction name="actionImport_Data"/>
+    <addaction name="actionExport_Data"/>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="actionGauges"/>
+    <addaction name="actionSystem_Health"/>
+   </widget>
+   <widget class="QMenu" name="menuData">
+    <property name="title">
+     <string>Data</string>
+    </property>
+    <widget class="QMenu" name="menuSensor_Configuration">
+     <property name="title">
+      <string>Sensor Configuration</string>
+     </property>
+     <addaction name="actionAdd_Sensor_2"/>
+     <addaction name="actionRemove_Sensor"/>
+    </widget>
+    <addaction name="menuSensor_Configuration"/>
+    <addaction name="actionSampling_Rate"/>
+    <addaction name="actionAlert_Thresholds"/>
+    <addaction name="actionUnits"/>
+   </widget>
+   <widget class="QMenu" name="menuSettings">
+    <property name="title">
+     <string>Settings</string>
+    </property>
+    <widget class="QMenu" name="menuDisplay">
+     <property name="title">
+      <string>Display</string>
+     </property>
+     <addaction name="actionLock_Layout"/>
+     <addaction name="actionUnlock_Layout"/>
+     <addaction name="actionSave_Layout"/>
+     <addaction name="actionLoad_Layout"/>
+    </widget>
+    <widget class="QMenu" name="menuWidgets">
+     <property name="title">
+      <string>Widgets</string>
+     </property>
+     <addaction name="actionAdd_Widget"/>
+     <addaction name="actionRemove_Widget"/>
+    </widget>
+    <widget class="QMenu" name="menuFile_Paths">
+     <property name="title">
+      <string>File Paths</string>
+     </property>
+     <addaction name="actionDefault_File_Path"/>
+     <addaction name="actionDefault_Snap_Path"/>
+    </widget>
+    <addaction name="actionProject_Settings"/>
+    <addaction name="actionUser_Preferences"/>
+    <addaction name="menuDisplay"/>
+    <addaction name="menuWidgets"/>
+    <addaction name="menuFile_Paths"/>
    </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuView"/>
+   <addaction name="menuData"/>
+   <addaction name="menuSettings"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionConnect">
    <property name="text">
     <string>Connect</string>
+   </property>
+  </action>
+  <action name="actionNew_Project">
+   <property name="text">
+    <string>New Project</string>
+   </property>
+  </action>
+  <action name="actionOpen_Project">
+   <property name="text">
+    <string>Open Project</string>
+   </property>
+  </action>
+  <action name="actionSave_Project">
+   <property name="text">
+    <string>Save Project</string>
+   </property>
+  </action>
+  <action name="actionSave_Project_As">
+   <property name="text">
+    <string>Save Project As</string>
+   </property>
+  </action>
+  <action name="actionImport_Data">
+   <property name="text">
+    <string>Import Data</string>
+   </property>
+  </action>
+  <action name="actionExport_Data">
+   <property name="text">
+    <string>Export Data</string>
+   </property>
+  </action>
+  <action name="actionGauges">
+   <property name="text">
+    <string>Gauges</string>
+   </property>
+  </action>
+  <action name="actionSystem_Health">
+   <property name="text">
+    <string>System Health</string>
+   </property>
+  </action>
+  <action name="actionAdd_Sensor">
+   <property name="text">
+    <string>Add Sensor</string>
+   </property>
+  </action>
+  <action name="actionAdd_Sensor_2">
+   <property name="text">
+    <string>Add Sensor</string>
+   </property>
+  </action>
+  <action name="actionRemove_Sensor">
+   <property name="text">
+    <string>Remove Sensor</string>
+   </property>
+  </action>
+  <action name="actionSampling_Rate">
+   <property name="text">
+    <string>Sampling Rate</string>
+   </property>
+  </action>
+  <action name="actionAlert_Thresholds">
+   <property name="text">
+    <string>Alert Thresholds</string>
+   </property>
+  </action>
+  <action name="actionProject_Settings">
+   <property name="text">
+    <string>Project Settings</string>
+   </property>
+  </action>
+  <action name="actionUser_Preferences">
+   <property name="text">
+    <string>User Preferences</string>
+   </property>
+  </action>
+  <action name="actionUnits">
+   <property name="text">
+    <string>Units</string>
+   </property>
+  </action>
+  <action name="actionLock_Layout">
+   <property name="text">
+    <string>Lock Layout</string>
+   </property>
+  </action>
+  <action name="actionUnlock_Layout">
+   <property name="text">
+    <string>Unlock Layout</string>
+   </property>
+  </action>
+  <action name="actionAdd_Widget">
+   <property name="text">
+    <string>Add Widget</string>
+   </property>
+  </action>
+  <action name="actionRemove_Widget">
+   <property name="text">
+    <string>Remove Widget</string>
+   </property>
+  </action>
+  <action name="actionSave_Layout">
+   <property name="text">
+    <string>Save Layout</string>
+   </property>
+  </action>
+  <action name="actionLoad_Layout">
+   <property name="text">
+    <string>Load Layout</string>
+   </property>
+  </action>
+  <action name="actionDefault_File_Path">
+   <property name="text">
+    <string>Default File Path</string>
+   </property>
+  </action>
+  <action name="actionDefault_Snap_Path">
+   <property name="text">
+    <string>Default Snap Path</string>
    </property>
   </action>
  </widget>
