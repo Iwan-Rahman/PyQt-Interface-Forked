@@ -28,42 +28,23 @@ class ComWindow(qw.QDialog,Ui_ComManager):
     self.initValues()
     self.refresh()
 
+  def refreshPort(self, portNo, port):
+    if serial_connection.connectedPorts[portNo] == None:
+      port.clear()
+      if(len(self.ports) == 0):
+        port.insertItem(0,'No Ports Found')
+        port.setEnabled(False)
+      else:
+        port.setEnabled(True)
+        for x in self.ports:
+          port.addItem(x)
+
   def refresh(self):
     self.ports = serial_connection.get_ports()
     print(self.ports)
-
-    # Reset Port 1 Input
-    if serial_connection.connectedPorts[0] == None:
-      self.PortInputP1.clear()
-      if(len(self.ports) == 0):
-        self.PortInputP1.insertItem(0,'No Ports Found')
-        self.PortInputP1.setEnabled(False)
-      else:
-        self.PortInputP1.setEnabled(True)
-        for x in self.ports:
-          self.PortInputP1.addItem(x)
-
-    # Reset Port 2 Input  
-    if serial_connection.connectedPorts[1] == None:
-      self.PortInputP2.clear()
-      if(len(self.ports) == 0):
-       self.PortInputP2.insertItem(0,'No Ports Found')
-       self.PortInputP2.setEnabled(False)
-      else:
-        self.PortInputP2.setEnabled(True)
-        for x in self.ports:
-          self.PortInputP2.addItem(x)
-    
-    # Reset Port 3 Input 
-    if serial_connection.connectedPorts[2] == None:
-      self.PortInputP3.clear()
-      if(len(self.ports) == 0):
-        self.PortInputP3.insertItem(0,'No Ports Found')
-        self.PortInputP3.setEnabled(False)
-      else:
-        self.PortInputP3.setEnabled(True)
-        for x in self.ports:
-          self.PortInputP3.addItem(x)   
+    self.refreshPort(0, self.PortInputP1) # Refresh Port 1 Input
+    self.refreshPort(1, self.PortInputP2) # Refrest Port 2 Input
+    self.refreshPort(2, self.PortInputP3) # Refresh Port 3 Input
   
   def initValues(self):
     self.DisconnectBtnP1.setEnabled(False)
@@ -98,7 +79,7 @@ class ComWindow(qw.QDialog,Ui_ComManager):
             reply = qw.QMessageBox.critical(
                 self, 
                 'Connection Error', 
-                f'There was an error connecting to the port: {e}',
+                'There was an error connecting to the port',
                 qw.QMessageBox.Ok
             )
 
