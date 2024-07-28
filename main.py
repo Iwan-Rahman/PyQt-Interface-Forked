@@ -1,5 +1,5 @@
 import serial
-from PyQt5 import QtWidgets as qw, uic
+from PyQt5 import QtWidgets as qw, QtCore as qc
 from MainWindow import Ui_MainWindow
 from ComManager import Ui_ComManager
 from graph import Ui_Graph
@@ -31,7 +31,7 @@ class ComWindow(qw.QDialog, Ui_ComManager):
         self.refresh()
 
     def refreshPort(self, portNo, port):
-        if serial_connection.connectedPorts[portNo] == None:
+        if serial_connection.connectedPorts[portNo] is None:
             port.clear()
             if len(self.ports) == 0:
                 port.insertItem(0, "No Ports Found")
@@ -88,6 +88,7 @@ class ComWindow(qw.QDialog, Ui_ComManager):
             timeoutInput.setEnabled(False)
             connectBtn.setEnabled(False)
             disconnectBtn.setEnabled(True)
+            self.updateConnectionDisplay(portNo)
         except Exception as e:
             reply = qw.QMessageBox.critical(
                 self,
@@ -118,7 +119,11 @@ class ComWindow(qw.QDialog, Ui_ComManager):
         TimeoutInput.setEnabled(True)
         ConnectBtn.setEnabled(True)
         DisconnectBtn.setEnabled(False)
+        
+        # Start a timer to call removeConnectionDisplay after a short delay
+        qc.QTimer.singleShot(50, lambda: self.removeConnectionDisplay(portNo))
 
+   
     def connectPort1(self):
         self.connectPort(
             0,
@@ -131,7 +136,6 @@ class ComWindow(qw.QDialog, Ui_ComManager):
             self.ConnectBtnP1,
             self.DisconnectBtnP1,
         )
-        
 
     def connectPort2(self):
         self.connectPort(
@@ -192,12 +196,37 @@ class ComWindow(qw.QDialog, Ui_ComManager):
             self.BaudInputP3,
             self.ByteSizeInputP3,
             self.ParityInputP3,
-            self.StopBitBtn1P3,
+            self.StopBitInputP3,
             self.TimeoutInputP3,
             self.ConnectBtnP3,
             self.DisconnectBtnP3,
         )
 
+    def updateConnectionDisplay(self, portNo):
+        if portNo == 0:
+            syncLbl = connection_manager.syncP1lbl
+        elif portNo == 1:
+            syncLbl = connection_manager.syncP2lbl
+        elif portNo == 2:
+            syncLbl = connection_manager.syncP3lbl
+
+        worker = serial_connection.connectedWorkers.get(portNo)
+        if worker:
+            worker.signals.data.connect(lambda data: self.updateConnection(syncLbl, 'Live'))
+            worker.signals.sync.connect(lambda: self.updateConnection(syncLbl, 'Unsynced'))
+            worker.signals.failed.connect(lambda: self.updateConnection(syncLbl, 'Failed'))
+
+    def removeConnectionDisplay(self, portNo):
+        if portNo == 0:
+            syncLbl = connection_manager.syncP1lbl
+        elif portNo == 1:
+            syncLbl = connection_manager.syncP2lbl
+        elif portNo == 2:
+            syncLbl = connection_manager.syncP3lbl
+        syncLbl.clear()
+
+    def updateConnection(self, syncLbl, status):
+        syncLbl.setText(status)
 
 class MainWindow(qw.QMainWindow, Ui_MainWindow):
     def __init__(self, *args, obj=None, **kwargs):
@@ -205,7 +234,7 @@ class MainWindow(qw.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.actionConnect.triggered.connect(self.openCOM)
         self.comWindow = None
-        self.connectionManager = ConnectionWidget()
+        self.connectionManager = connection_manager
         self.horizontalLayout.replaceWidget(
             self.connectionWidget, self.connectionManager
         )
@@ -229,8 +258,9 @@ class MainWindow(qw.QMainWindow, Ui_MainWindow):
         else:
             event.ignore()  # Ignore the close event, keep the window open
 
-
-app = qw.QApplication([])
-window = MainWindow()
-window.show()
-app.exec()
+if __name__ == "__main__":
+    app = qw.QApplication([])
+    connection_manager = ConnectionWidget()  # Move this here
+    window = MainWindow()
+    window.show()
+    app.exec()

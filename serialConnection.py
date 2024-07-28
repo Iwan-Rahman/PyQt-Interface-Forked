@@ -5,7 +5,6 @@ from PyQt5.QtCore import *
 
 
 class SerialSignals(QObject):
-    live = pyqtSignal()
     sync = pyqtSignal()
     failed = pyqtSignal()
     data = pyqtSignal(float)
@@ -40,21 +39,20 @@ class SerialWorker(QRunnable):
                 print(arduinoData_string)
                 arduinoData_float = float(arduinoData_string)
                 self.signals.data.emit(arduinoData_float)
-            except ValueError:
+            except (UnboundLocalError, ValueError, UnicodeDecodeError) :
                 print(f"Invalid data: {arduinoData_string}")
                 self.signals.sync.emit()
-                time.sleep(1)
-                self.reconnect
+                time.sleep(0.5)
+                self.reconnect()
                 continue
             except serial.SerialException:
-                print("Port Disconnected")
                 self.signals.failed.emit()
-                time.sleep(1)
+                time.sleep(0.5)
                 self.reconnect()
                 continue
             except Exception as e:
                 print(f"Error: {e}")
-
+            
 
 class SerialConnection(QObject):
     def __init__(self):
