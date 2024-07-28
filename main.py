@@ -131,6 +131,7 @@ class ComWindow(qw.QDialog, Ui_ComManager):
             self.ConnectBtnP1,
             self.DisconnectBtnP1,
         )
+        
 
     def connectPort2(self):
         self.connectPort(
