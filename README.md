@@ -1,3 +1,0 @@
-# PyQt-Interface
-
-##WOAH
