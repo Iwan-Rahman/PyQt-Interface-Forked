@@ -36,8 +36,7 @@
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 0, 0); /* Red */
-</string>
+     <string notr="true"/>
     </property>
     <layout class="QGridLayout" name="gridlayout">
      <item row="3" column="2">
@@ -102,7 +101,7 @@
         </sizepolicy>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(20, 99, 100);</string>
+        <string notr="true"/>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <property name="topMargin">
@@ -120,7 +119,7 @@
         </sizepolicy>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(100, 55, 0); </string>
+        <string notr="true"/>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
@@ -148,7 +147,7 @@
         </sizepolicy>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(50, 50, 0100);</string>
+        <string notr="true"/>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
         <item>
@@ -173,7 +172,7 @@
      <x>0</x>
      <y>0</y>
      <width>803</width>
-     <height>25</height>
+     <height>18</height>
     </rect>
    </property>
   </widget>

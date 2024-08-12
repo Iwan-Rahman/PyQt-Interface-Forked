@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from graphics_window import Ui_GraphicsWindow, GraphicsWindow
 
 class Ui_ConnectionManager(object):
     def setupUi(self, Dialog):
@@ -230,25 +230,33 @@ class Ui_ConnectionManager(object):
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+
+        #2D Plotter Buttons
         self.LineBtn = QtWidgets.QPushButton(self.TwoDPlotBtns)
         self.LineBtn.setText("")
         self.LineBtn.setObjectName("LineBtn")
+        self.LineBtn.clicked.connect(self.open_graphics_window)
         self.horizontalLayout_2.addWidget(self.LineBtn)
         self.BarBtn = QtWidgets.QPushButton(self.TwoDPlotBtns)
         self.BarBtn.setText("")
         self.BarBtn.setObjectName("BarBtn")
+        self.BarBtn.clicked.connect(self.open_graphics_window)
         self.horizontalLayout_2.addWidget(self.BarBtn)
         self.ScatterBtn = QtWidgets.QPushButton(self.TwoDPlotBtns)
         self.ScatterBtn.setText("")
         self.ScatterBtn.setObjectName("ScatterBtn")
+        self.ScatterBtn.clicked.connect(self.open_graphics_window)
         self.horizontalLayout_2.addWidget(self.ScatterBtn)
         self.HistogramBtn = QtWidgets.QPushButton(self.TwoDPlotBtns)
         self.HistogramBtn.setText("")
         self.HistogramBtn.setObjectName("HistogramBtn")
+        self.HistogramBtn.clicked.connect(self.open_graphics_window)
         self.horizontalLayout_2.addWidget(self.HistogramBtn)
         self.PieBtn = QtWidgets.QPushButton(self.TwoDPlotBtns)
         self.PieBtn.setText("")
         self.PieBtn.setObjectName("PieBtn")
+        self.PieBtn.clicked.connect(self.open_graphics_window)
+
         self.horizontalLayout_2.addWidget(self.PieBtn)
         self.horizontalLayout_5.addLayout(self.horizontalLayout_2)
         self.TwoDPlot.addWidget(self.TwoDPlotBtns)
@@ -316,3 +324,18 @@ class Ui_ConnectionManager(object):
         self.portSelect.setTabText(self.portSelect.indexOf(self.Port3), _translate("Dialog", "Port 3"))
         self.TwoDPlotterLbl.setText(_translate("Dialog", "<html><head/><body><p align=\"center\"><span style=\" font-size:14pt;\">2D Plotter</span></p></body></html>"))
         self.ThreeDPlotterLbl.setText(_translate("Dialog", "<html><head/><body><p align=\"center\"><span style=\" font-size:14pt;\">3D Plotter</span></p></body></html>"))
+    
+    def __init__(self):
+        super().__init__()
+        self.graphics_windows = {}
+        self.window_counter = 0
+
+    def open_graphics_window(self):
+        self.window_counter += 1
+        window_id = f'window_{self.window_counter}'
+        
+        new_window = GraphicsWindow()
+        new_window.setWindowTitle(window_id)
+
+        self.graphics_windows[window_id] = new_window
+        new_window.show()

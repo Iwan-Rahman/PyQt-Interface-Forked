@@ -2,9 +2,9 @@ import serial
 from PyQt5 import QtWidgets as qw, QtCore as qc
 from MainWindow import Ui_MainWindow
 from ComManager import Ui_ComManager
-from graph import Ui_Graph
 from serialConnection import serial_connection
 from ConnectionManager import Ui_ConnectionManager
+from graphics_window import Ui_GraphicsWindow
 
 
 class ConnectionWidget(qw.QWidget, Ui_ConnectionManager):
