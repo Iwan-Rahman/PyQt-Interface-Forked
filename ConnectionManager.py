@@ -325,17 +325,3 @@ class Ui_ConnectionManager(object):
         self.TwoDPlotterLbl.setText(_translate("Dialog", "<html><head/><body><p align=\"center\"><span style=\" font-size:14pt;\">2D Plotter</span></p></body></html>"))
         self.ThreeDPlotterLbl.setText(_translate("Dialog", "<html><head/><body><p align=\"center\"><span style=\" font-size:14pt;\">3D Plotter</span></p></body></html>"))
     
-    def __init__(self):
-        super().__init__()
-        self.graphics_windows = {}
-        self.window_counter = 0
-
-    def open_graphics_window(self):
-        self.window_counter += 1
-        window_id = f'window_{self.window_counter}'
-        
-        new_window = GraphicsWindow()
-        new_window.setWindowTitle(window_id)
-
-        self.graphics_windows[window_id] = new_window
-        new_window.show()

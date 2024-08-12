@@ -1,16 +1,13 @@
 import serial
+
 from PyQt5 import QtWidgets as qw, QtCore as qc
 from MainWindow import Ui_MainWindow
 from ComManager import Ui_ComManager
 from serialConnection import serial_connection
 from ConnectionManager import Ui_ConnectionManager
-from graphics_window import Ui_GraphicsWindow
+from connection_manager import ConnectionWidget
+from graphics_window import GraphicsWindow
 
-
-class ConnectionWidget(qw.QWidget, Ui_ConnectionManager):
-    def __init__(self):
-        super().__init__()
-        self.setupUi(self)
 
 
 class ComWindow(qw.QDialog, Ui_ComManager):
